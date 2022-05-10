@@ -29,11 +29,11 @@ def show_board():
 #     return redirect('/')
 
 
-@app.route('/check-word', methods=["POST"])
+@app.route('/check-word', methods=['POST'])
 def check_word_request():
     """Check users input if word exists"""
-    board = session['board']
-    guess = request.form["guess"]
+    board = session["board"]
+    guess = request.args["guess"]
     print(f"**********{board}***********")
     print(f"THIS IS GUESS**********{guess}***********")
     response = boggle_game.check_valid_word(board, guess)
