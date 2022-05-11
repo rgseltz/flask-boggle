@@ -2,6 +2,8 @@
 const button = document.querySelector('#button');
 const guess = document.querySelector('#guess-input');
 const message = document.querySelector('#message');
+const scoreBoard = document.querySelector('#score-board');
+let total = 0;
 
 button.addEventListener('click', async function(evt) {
 	evt.preventDefault();
@@ -18,9 +20,20 @@ button.addEventListener('click', async function(evt) {
 	appendNewWord(guess.value);
 });
 
-function appendNewWord(word) {
+function appendNewWord(word, score) {
 	const li = document.createElement('li');
-	li.innerHTML = word;
+	word = word.toLowerCase();
+	score = word.length;
+	calcScore(score);
+	li.innerHTML = `${word} is worth ${score}`;
 	return message.append(li);
+}
+
+function calcScore(score) {
+	const totalScore = document.createElement('h2');
+	total = total + score;
+	totalScore.innerHTML = `Total Score: ${total}`;
+	console.log(totalScore);
+	return totalScore.append(scoreBoard);
 }
 //check server validity
