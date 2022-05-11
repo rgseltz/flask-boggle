@@ -33,7 +33,7 @@ def show_board():
 def check_word_request():
     """Check users input if word exists"""
     board = session["board"]
-    guess = request.args["guess"]
+    guess = request.json["guess"]
     print(f"**********{board}***********")
     print(f"THIS IS GUESS**********{guess}***********")
     response = boggle_game.check_valid_word(board, guess)
