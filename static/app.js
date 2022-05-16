@@ -14,26 +14,26 @@ button.addEventListener('click', async function(evt) {
 		alert('That word is not on the board. Please try again.');
 	} else if (res.data.result === 'not-word') {
 		alert('That is not a valid word. Please try again');
+	} else if (res.data.result === 'already-handled') {
+		alert('You have already entered this word');
 	} else {
 		alert('You got another word. Good job!');
+		appendNewWord(guess.value);
 	}
-	appendNewWord(guess.value);
 });
 
 function appendNewWord(word, score) {
 	const li = document.createElement('li');
 	word = word.toLowerCase();
 	score = word.length;
-	calcScore(score);
+	updateScore(score);
 	li.innerHTML = `${word} is worth ${score}`;
 	return message.append(li);
 }
 
-function calcScore(score) {
-	const totalScore = document.createElement('h2');
+function updateScore(score) {
 	total = total + score;
-	totalScore.innerHTML = `Total Score: ${total}`;
-	console.log(totalScore);
-	return totalScore.append(scoreBoard);
+	const totalScore = document.getElementById('total-score');
+	totalScore.innerHTML = `Your total score is ${total}`;
 }
 //check server validity
