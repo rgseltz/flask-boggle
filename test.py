@@ -13,7 +13,26 @@ class FlaskTests(TestCase):
             html = res.get_data(as_text=True)
 
             self.assertEqual(res.status_code, 200)
+            self.assertIn('board', session)
+            # self.assertIn(html, '')
 
-    def test_board(self):
-        with app.test_client() as client:
-            self.assertIs()
+    # def setUp(self):
+    #     """Set this up before testing"""
+    #     app.config['TESTING'] = True
+
+    # def test_submit_word_request(self):
+    #     with app.test_client() as client:
+    #         res = client.get('/check-word')
+
+    #         self.assertEqual(res.status_code, 200)
+
+    def test_valid_word(self):
+        with self.client as client:
+            with client.session_transaction() as session:
+                session['board'] = [["B", "A", "N", "T", "T"],
+                                    ["B", "A", "N", "T", "T"],
+                                    ["B", "A", "N", "T", "T"],
+                                    ["B", "A", "N", "T", "T"],
+                                    ["B", "A", "N", "T", "T"]]
+                res = self.client.get('/check-word?guess=ant')
+                self.assertEqual(res.json['result'], 'ok')
