@@ -5,6 +5,9 @@ from boggle import Boggle
 
 
 class FlaskTests(TestCase):
+    def setUp(self):
+        """Set this up before testing"""
+        app.config['TESTING'] = True
 
     # TODO -- write tests for every view function / feature!
     def test_index(self):
@@ -16,10 +19,6 @@ class FlaskTests(TestCase):
             self.assertIn('board', session)
             # self.assertIn(html, '')
 
-    # def setUp(self):
-    #     """Set this up before testing"""
-    #     app.config['TESTING'] = True
-
     # def test_submit_word_request(self):
     #     with app.test_client() as client:
     #         res = client.get('/check-word')
@@ -27,12 +26,12 @@ class FlaskTests(TestCase):
     #         self.assertEqual(res.status_code, 200)
 
     def test_valid_word(self):
-        with self.client as client:
+        with app.test_client() as client:
             with client.session_transaction() as session:
                 session['board'] = [["B", "A", "N", "T", "T"],
                                     ["B", "A", "N", "T", "T"],
                                     ["B", "A", "N", "T", "T"],
                                     ["B", "A", "N", "T", "T"],
                                     ["B", "A", "N", "T", "T"]]
-                res = self.client.get('/check-word?guess=ant')
-                self.assertEqual(res.json['result'], 'ok')
+            res = client.get('/check-word?guess=ant')
+            self.assertEqual(res.json['result'], 'ok')
