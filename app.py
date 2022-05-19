@@ -20,27 +20,26 @@ def show_board():
     return render_template('/index.html', board=board)
 
 
-# @app.route('/input-guess')
-# def input_guess():
-#     """inputs guess into server"""
-#     guess = request.args['guess']
-#     session["guess"] = guess
-#     return redirect('/')
-
-
-@app.route('/check-word', methods=['POST'])
+@app.route('/check-word')
 def check_word_request():
     """Check users input if word exists"""
-    guess = request.json["guess"]
+    guess = request.args["guess"]
     if guess in session.get('words', []):
         return jsonify({"result": "already-handled"})
     board = session["board"]
-
-    print(f"**********{board}***********")
-    print(f"THIS IS GUESS**********{guess}***********")
     response = boggle_game.check_valid_word(board, guess)
     if response == 'ok':
         valid_words = session.get('words', [])
         valid_words.append(guess)
         session['words'] = valid_words
     return jsonify({"result": response})
+
+
+@app.route('/post-score', methods=['POST'])
+def post_score():
+    score = request.json['score']
+    add_score = session.get('score', [])
+    add_score.append(score)
+    session['score'] = add_score
+    print(f'$$$%%%%%{session["score"]}####$$$$&&&&')
+    return jsonify(f'score: {score}')
