@@ -8,6 +8,10 @@
     <title>Boggle</title>
 </head>
 <body>
+    <div id="countdown"></div>
+    <form id="restart">
+        <button action="/" class="btn">Restart</button>
+    </form>
     <div>
         <h2 id="total-score">Your Total Score is 0</h2>
     </div>
@@ -21,10 +25,10 @@
         {% endfor %}
         </tbody>
     </table>
-        
+     <div id="word-form" method="POST">   
     <input type="text" name="guess" placeholder="Input your word here" id="guess-input">
-    <button id="button">Submit</button>
-        
+    <button id="button" class="btn">Submit</button>
+     </div>
     <p class ="msg" id="score-board">
     </p>
     
